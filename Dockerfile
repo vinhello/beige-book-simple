@@ -4,7 +4,7 @@ FROM node:16 AS frontend-build
 # Set working directory for the frontend
 WORKDIR /app/frontend
 
-# Copy only the package.json and package-lock.json files for dependency installation
+# Copy the package.json and package-lock.json files first to leverage Docker cache
 COPY frontend/package*.json ./
 
 # Install dependencies
@@ -20,7 +20,7 @@ FROM python:3.9-slim AS backend
 # Set the working directory for the backend
 WORKDIR /app/backend
 
-# Copy the backend requirements and install Python dependencies
+# Copy and install backend dependencies first to cache these layers if requirements don’t change
 COPY backend/requirements.txt .
 RUN pip install -r requirements.txt
 
