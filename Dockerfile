@@ -4,7 +4,8 @@ FROM node:16 AS frontend-build
 # Set working directory for the frontend
 WORKDIR /app/frontend
 
-# Copy the package.json and package-lock.json files first to leverage Docker cache
+# Copy only the package.json and package-lock.json files first to leverage Docker cache
+# Make sure these files exist in frontend directory
 COPY frontend/package*.json ./
 
 # Install dependencies
